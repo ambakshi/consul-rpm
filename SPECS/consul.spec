@@ -1,12 +1,12 @@
 %if 0%{?_version:1}
 %define         _verstr      %{_version}
 %else
-%define         _verstr      1.0.6
+%define         _verstr      1.2.1
 %endif
 
 Name:           consul
 Version:        %{_verstr}
-Release:        1%{?dist}
+Release:        %{_build_number}%{?dist}
 Summary:        Consul is a tool for service discovery and configuration. Consul is distributed, highly available, and extremely scalable.
 
 Group:          System Environment/Daemons
@@ -111,6 +111,9 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Mon Jul 16 2018 ambakshi ambakshi@gmail.com
+- Bump version to 1.2.1
+
 * Sun Mar 25 2018 ambakshi ambakshi@gmail.com
 - Bump version to 1.0.6
 
