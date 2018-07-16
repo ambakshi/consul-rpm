@@ -1,12 +1,12 @@
 %if 0%{?_version:1}
 %define         _verstr      %{_version}
 %else
-%define         _verstr      0.19.4
+%define         _verstr      0.19.5
 %endif
 
 Name:           consul-template
 Version:        %{_verstr}
-Release:        1%{?dist}
+Release:        %{_build_number}%{?dist}
 Summary:        consul-template watches a series of templates on the file system, writing new changes when Consul is updated. It runs until an interrupt is received unless the -once flag is specified.
 
 Group:          System Environment/Daemons

@@ -1,0 +1,18 @@
+# default build is for CentOS7, change the base image to fit your build.
+FROM centos:centos7
+MAINTAINER Sebastien Le Digabel "sledigabel@gmail.com"
+
+RUN yum install -y rpmdevtools mock
+
+RUN cd /root && rpmdev-setuptree
+ADD SOURCES/* /root/rpmbuild/SOURCES/
+ADD SPECS/* /root/rpmbuild/SPECS/
+RUN ln -s /root/rpmbuild/RPMS /RPMS
+
+VOLUME ["/RPMS"]
+ENV DIST el7
+ARG CONSUL_VERSION
+ARG CONSUL_TEMPLATE_VERSION
+ARG BUILD_NUMBER
+CMD set -x && cd /root && spectool -g -R rpmbuild/SPECS/consul.spec && rpmbuild -ba rpmbuild/SPECS/consul.spec --define "_build_number ${BUILD_NUMBER}" --define "_version ${CONSUL_VERSION}" --define "dist .${DIST}" \
+    && spectool -g -R rpmbuild/SPECS/consul-template.spec && rpmbuild -ba rpmbuild/SPECS/consul-template.spec --define "_build_number ${BUILD_NUMBER}" --define "_version ${CONSUL_TEMPLATE_VERSION}" --define "dist .${DIST}"
